@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SetupViewController.swift
 //  SetupLabel
 //
 //  Created by Ильфат Салахов on 25.09.2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+class SetupViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,10 +15,9 @@ class MainViewController: UIViewController {
     }
 }
 
-extension MainViewController {
+extension SetupViewController {
     private func setupView() {
-        title = "Текст"
+        title = "Настройки"
         view.backgroundColor = .systemBackground
     }
 }
-

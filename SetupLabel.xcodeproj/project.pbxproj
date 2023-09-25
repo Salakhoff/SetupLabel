@@ -12,6 +12,8 @@
 		1719C6F82AC193D100209C55 /* MainViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1719C6F72AC193D100209C55 /* MainViewControllers.swift */; };
 		1719C6FD2AC193D200209C55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1719C6FC2AC193D200209C55 /* Assets.xcassets */; };
 		1719C7002AC193D200209C55 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1719C6FE2AC193D200209C55 /* LaunchScreen.storyboard */; };
+		1719C70C2AC1968400209C55 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1719C70B2AC1968400209C55 /* TabBarController.swift */; };
+		1719C70E2AC1978F00209C55 /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1719C70D2AC1978F00209C55 /* SetupViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		1719C6FC2AC193D200209C55 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1719C6FF2AC193D200209C55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1719C7012AC193D200209C55 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1719C70B2AC1968400209C55 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		1719C70D2AC1978F00209C55 /* SetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +82,8 @@
 			isa = PBXGroup;
 			children = (
 				1719C6F72AC193D100209C55 /* MainViewControllers.swift */,
+				1719C70B2AC1968400209C55 /* TabBarController.swift */,
+				1719C70D2AC1978F00209C55 /* SetupViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -167,8 +173,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1719C6F82AC193D100209C55 /* MainViewControllers.swift in Sources */,
+				1719C70C2AC1968400209C55 /* TabBarController.swift in Sources */,
 				1719C6F42AC193D100209C55 /* AppDelegate.swift in Sources */,
 				1719C6F62AC193D100209C55 /* SceneDelegate.swift in Sources */,
+				1719C70E2AC1978F00209C55 /* SetupViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
