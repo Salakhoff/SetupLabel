@@ -14,6 +14,9 @@
 		1719C7002AC193D200209C55 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1719C6FE2AC193D200209C55 /* LaunchScreen.storyboard */; };
 		1719C70C2AC1968400209C55 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1719C70B2AC1968400209C55 /* TabBarController.swift */; };
 		1719C70E2AC1978F00209C55 /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1719C70D2AC1978F00209C55 /* SetupViewController.swift */; };
+		1719C7102AC1E7F300209C55 /* DescriptionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1719C70F2AC1E7F300209C55 /* DescriptionLabel.swift */; };
+		1719C7122AC1EC1800209C55 /* ValueLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1719C7112AC1EC1800209C55 /* ValueLabel.swift */; };
+		1719C7142AC1F12A00209C55 /* ValueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1719C7132AC1F12A00209C55 /* ValueButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		1719C7012AC193D200209C55 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1719C70B2AC1968400209C55 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		1719C70D2AC1978F00209C55 /* SetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
+		1719C70F2AC1E7F300209C55 /* DescriptionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionLabel.swift; sourceTree = "<group>"; };
+		1719C7112AC1EC1800209C55 /* ValueLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueLabel.swift; sourceTree = "<group>"; };
+		1719C7132AC1F12A00209C55 /* ValueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,9 +64,9 @@
 		1719C6F22AC193D100209C55 /* SetupLabel */ = {
 			isa = PBXGroup;
 			children = (
+				1719C7072AC1953600209C55 /* App */,
 				1719C70A2AC1956800209C55 /* Models */,
 				1719C7092AC1956300209C55 /* Views */,
-				1719C7072AC1953600209C55 /* App */,
 				1719C7082AC1955100209C55 /* Controllers */,
 			);
 			path = SetupLabel;
@@ -91,6 +97,9 @@
 		1719C7092AC1956300209C55 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1719C70F2AC1E7F300209C55 /* DescriptionLabel.swift */,
+				1719C7112AC1EC1800209C55 /* ValueLabel.swift */,
+				1719C7132AC1F12A00209C55 /* ValueButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -175,7 +184,10 @@
 				1719C6F82AC193D100209C55 /* MainViewControllers.swift in Sources */,
 				1719C70C2AC1968400209C55 /* TabBarController.swift in Sources */,
 				1719C6F42AC193D100209C55 /* AppDelegate.swift in Sources */,
+				1719C7102AC1E7F300209C55 /* DescriptionLabel.swift in Sources */,
 				1719C6F62AC193D100209C55 /* SceneDelegate.swift in Sources */,
+				1719C7142AC1F12A00209C55 /* ValueButton.swift in Sources */,
+				1719C7122AC1EC1800209C55 /* ValueLabel.swift in Sources */,
 				1719C70E2AC1978F00209C55 /* SetupViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
