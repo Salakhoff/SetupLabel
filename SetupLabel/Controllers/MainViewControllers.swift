@@ -22,14 +22,40 @@ class MainViewController: UIViewController {
         button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         return button
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
     
     @objc private func addButtonTapped() {
-        print("Add")
+        let alertController = UIAlertController(title: "Введите текст для отображения", message: nil, preferredStyle: .alert)
+        alertController.addTextField { textField in
+            textField.placeholder = "Введите текст..."
+        }
+        
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+        let addAction = UIAlertAction(title: "ОК", style: .default) { [weak self] textField in
+            guard let self else { return }
+            if let textField = alertController.textFields?.first, let text = textField.text {
+                let trimmerText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !trimmerText.isEmpty {
+                    self.label.text = text
+                } else {
+                    let errorAlertController = UIAlertController(title: "Введите текст!", message: nil, preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+                        guard let self else { return }
+                        self.addButtonTapped()
+                    }
+                    errorAlertController.addAction(okAction)
+                    present(errorAlertController, animated: true) {
+                    }
+                }
+            }
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(addAction)
+        present(alertController, animated: true)
     }
 }
 
