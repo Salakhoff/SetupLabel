@@ -7,7 +7,15 @@
 
 import UIKit
 
+protocol TextSettingsDelegate: AnyObject {
+    func didUpdateTextSettings(textSettings: TextSettings)
+}
+
 class SetupViewController: UIViewController {
+    
+    weak var delegate: TextSettingsDelegate?
+    
+    private var textSettings = TextSettings(fontSize: 1, textColor: .black, numberOfLines: 0)
     
     private let settingFontLabel = DescriptionLabel(labelText: "Размера шрифта:")
     private let settingColorLabel = DescriptionLabel(labelText: "Цвет текста:")
@@ -29,6 +37,13 @@ class SetupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        
+        settingFontSlider.addTarget(self, action: #selector(fontSizeSliderValueChanged(_:)), for: .valueChanged)
+    }
+    
+    @objc private func fontSizeSliderValueChanged(_ sender: UISlider) {
+        textSettings.fontSize = CGFloat(sender.value)
+        valueSliderLabel.text = "\(Int(textSettings.fontSize))"
     }
 }
 
