@@ -31,8 +31,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         updateViews()
-        
-        setupViewController.delegate = self
+        setDelegate()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -57,11 +56,24 @@ class MainViewController: UIViewController {
         navigationItem.rightBarButtonItem = addButtonItem
         setConstraints()
     }
+    
+    private func setDelegate() {
+        if self.tabBarController != nil {
+            if let viewControllers = tabBarController?.viewControllers {
+                for vc in viewControllers {
+                    if let navController = vc as? UINavigationController,
+                       let setupVC = navController.viewControllers.first as? SetupViewController {
+                        setupVC.delegate = self
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension MainViewController: TextSettingsDelegate {
     func didUpdateTextSettings(textSettings: TextSettings) {
-        print("РАБОТАЕТ")
+        self.textSettings = textSettings
     }
 }
 
