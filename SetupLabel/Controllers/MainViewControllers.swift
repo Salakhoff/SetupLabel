@@ -9,7 +9,11 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    private let label: UILabel = {
+    private var textSettings = TextSettings(fontSize: 20, textColor: .black, numberOfLines: 0)
+    
+    let setupViewController = SetupViewController()
+    
+    private var label: UILabel = {
         let label = UILabel()
         label.text = "Text"
         label.textAlignment = .center
@@ -26,9 +30,52 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        updateViews()
+        
+        setupViewController.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateViews()
     }
     
     @objc private func addButtonTapped() {
+        workWithAlertController()
+    }
+    
+    private func updateViews() {
+        label.font = UIFont.systemFont(ofSize: self.textSettings.fontSize)
+        label.textColor = self.textSettings.textColor
+        label.numberOfLines = self.textSettings.numberOfLines
+    }
+    
+    private func setupView() {
+        title = "Текст"
+        view.backgroundColor = .systemBackground
+        view.addSubview(label)
+        navigationItem.rightBarButtonItem = addButtonItem
+        setConstraints()
+    }
+}
+
+extension MainViewController: TextSettingsDelegate {
+    func didUpdateTextSettings(textSettings: TextSettings) {
+        print("РАБОТАЕТ")
+    }
+}
+
+extension MainViewController {
+    private func setConstraints() {
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            label.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            label.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.9)
+        ])
+    }
+    
+    private func workWithAlertController() {
         let alertController = UIAlertController(title: "Введите текст для отображения", message: nil, preferredStyle: .alert)
         alertController.addTextField { textField in
             textField.placeholder = "Введите текст..."
@@ -56,28 +103,6 @@ class MainViewController: UIViewController {
         alertController.addAction(cancelAction)
         alertController.addAction(addAction)
         present(alertController, animated: true)
-    }
-}
-
-extension MainViewController {
-    private func setupView() {
-        title = "Текст"
-        view.backgroundColor = .systemBackground
-        
-        view.addSubview(label)
-        
-        navigationItem.rightBarButtonItem = addButtonItem
-        
-        setConstraints()
-    }
-    
-    private func setConstraints() {
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            label.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-            label.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.9)
-        ])
     }
 }
 

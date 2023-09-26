@@ -10,18 +10,18 @@ import UIKit
 protocol TextSettingsDelegate: AnyObject {
     func didUpdateTextSettings(textSettings: TextSettings)
 }
-
+ 
 class SetupViewController: UIViewController {
     
     weak var delegate: TextSettingsDelegate?
     
-    private var textSettings = TextSettings(fontSize: 1, textColor: .black, numberOfLines: 0)
+    var textSettings = TextSettings(fontSize: 20, textColor: .black, numberOfLines: 0)
     
     private let settingFontLabel = DescriptionLabel(labelText: "Размера шрифта:")
     private let settingColorLabel = DescriptionLabel(labelText: "Цвет текста:")
     private let numberLineLabel = DescriptionLabel(labelText: "Количество строк:")
     
-    private let valueSliderLabel = ValueLabel(labelText: "0")
+    private let valueSliderLabel = ValueLabel(labelText: "20")
     
     private lazy var colorButton = ValueButton(titleText: "Выбрать цвет")
     private lazy var numberLineButton = ValueButton(titleText: "Выбрать количество строк")
@@ -30,6 +30,7 @@ class SetupViewController: UIViewController {
         let slider = UISlider()
         slider.minimumValue = 1
         slider.maximumValue = 100
+        slider.value = 20
         slider.translatesAutoresizingMaskIntoConstraints = false
         return slider
     }()
@@ -39,15 +40,15 @@ class SetupViewController: UIViewController {
         setupView()
         
         settingFontSlider.addTarget(self, action: #selector(fontSizeSliderValueChanged(_:)), for: .valueChanged)
+        colorButton.addTarget(self, action: #selector(colorButtonTapped), for: .touchUpInside)
+        numberLineButton.addTarget(self, action: #selector(numberOfLinesButtonTapped), for: .touchUpInside)
     }
     
-    @objc private func fontSizeSliderValueChanged(_ sender: UISlider) {
-        textSettings.fontSize = CGFloat(sender.value)
-        valueSliderLabel.text = "\(Int(textSettings.fontSize))"
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        delegate?.didUpdateTextSettings(textSettings: textSettings)
     }
-}
-
-extension SetupViewController {
+    
     private func setupView() {
         title = "Настройки"
         view.backgroundColor = .systemBackground
@@ -63,6 +64,21 @@ extension SetupViewController {
         setConstraints()
     }
     
+    @objc private func fontSizeSliderValueChanged(_ sender: UISlider) {
+        textSettings.fontSize = CGFloat(sender.value)
+        valueSliderLabel.text = "\(Int(textSettings.fontSize))"
+    }
+    
+    @objc private func colorButtonTapped() {
+        // Тут работа с colorButtonTapped
+    }
+    
+    @objc private func numberOfLinesButtonTapped() {
+        // Показать контроллер выбора количества строк и обновить значение textSettings.numberOfLines
+    }
+}
+
+extension SetupViewController {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             settingFontLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
