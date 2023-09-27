@@ -10,11 +10,12 @@ import UIKit
 protocol TextSettingsDelegate: AnyObject {
     func didUpdateTextSettings(textSettings: TextSettings)
 }
- 
+
 class SetupViewController: UIViewController {
     
     weak var delegate: TextSettingsDelegate?
     
+    private var colorChoice: ColorChoice = .blue
     var textSettings = TextSettings(fontSize: 20, textColor: .black, numberOfLines: 0)
     
     private let settingFontLabel = DescriptionLabel(labelText: "Размера шрифта:")
@@ -26,6 +27,13 @@ class SetupViewController: UIViewController {
     private lazy var colorButton = ValueButton(titleText: "Выбрать цвет")
     private lazy var numberLineButton = ValueButton(titleText: "Выбрать количество строк")
     
+    private lazy var pickerColorView: UIPickerView = {
+        let picker = UIPickerView()
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        picker.isHidden = true
+        return picker
+    }()
+    
     private let settingFontSlider: UISlider = {
         let slider = UISlider()
         slider.minimumValue = 1
@@ -34,10 +42,13 @@ class SetupViewController: UIViewController {
         slider.translatesAutoresizingMaskIntoConstraints = false
         return slider
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        
+        pickerColorView.delegate = self
+        pickerColorView.dataSource = self
         
         settingFontSlider.addTarget(self, action: #selector(fontSizeSliderValueChanged(_:)), for: .valueChanged)
         colorButton.addTarget(self, action: #selector(colorButtonTapped), for: .touchUpInside)
@@ -60,6 +71,7 @@ class SetupViewController: UIViewController {
         view.addSubview(colorButton)
         view.addSubview(numberLineLabel)
         view.addSubview(numberLineButton)
+        view.addSubview(pickerColorView)
         
         setConstraints()
     }
@@ -70,7 +82,12 @@ class SetupViewController: UIViewController {
     }
     
     @objc private func colorButtonTapped() {
-        // Тут работа с colorButtonTapped
+        
+        if let row = ColorChoice.allCases.firstIndex(of: colorChoice) {
+            pickerColorView.selectRow(row, inComponent: 0, animated: true)
+        }
+        
+        pickerColorView.isHidden = false
     }
     
     @objc private func numberOfLinesButtonTapped() {
@@ -106,6 +123,31 @@ extension SetupViewController {
             
             numberLineButton.topAnchor.constraint(equalTo: numberLineLabel.bottomAnchor, constant: 10),
             numberLineButton.leadingAnchor.constraint(equalTo: settingFontSlider.leadingAnchor),
+            
+            pickerColorView.topAnchor.constraint(equalTo: numberLineButton.bottomAnchor, constant: 20),
+            pickerColorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            pickerColorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
+    }
+}
+
+extension SetupViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        ColorChoice.allCases.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        ColorChoice.allCases[row].rawValue
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        colorChoice = ColorChoice.allCases[row]
+        textSettings.textColor = colorChoice.systemColor
+        colorButton.setTitle("Вы выбрали цвет: \(colorChoice.rawValue)", for: .normal)
+        pickerColorView.isHidden = true
     }
 }
