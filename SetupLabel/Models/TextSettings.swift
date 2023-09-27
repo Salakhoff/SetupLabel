@@ -10,5 +10,5 @@ import UIKit
 struct TextSettings {
     var fontSize: CGFloat = 20
     var textColor: ColorChoice = .black
-    var numberOfLines: Int = 0
+    var numberOfLines: NumberOfLines = .default
 }

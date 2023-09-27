@@ -16,6 +16,7 @@
 		1719C70E2AC1978F00209C55 /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1719C70D2AC1978F00209C55 /* SetupViewController.swift */; };
 		1719C7102AC1E7F300209C55 /* DescriptionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1719C70F2AC1E7F300209C55 /* DescriptionLabel.swift */; };
 		1719C7142AC1F12A00209C55 /* ValueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1719C7132AC1F12A00209C55 /* ValueButton.swift */; };
+		175979582AC4831D00293A16 /* NumberOfLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175979572AC4831D00293A16 /* NumberOfLines.swift */; };
 		17C14ABA2AC29F0800E0730D /* TextSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C14AB92AC29F0800E0730D /* TextSettings.swift */; };
 		17FBDDF22AC3EC3B006935DA /* ColorChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FBDDF12AC3EC3B006935DA /* ColorChoice.swift */; };
 /* End PBXBuildFile section */
@@ -32,6 +33,7 @@
 		1719C70D2AC1978F00209C55 /* SetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
 		1719C70F2AC1E7F300209C55 /* DescriptionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionLabel.swift; sourceTree = "<group>"; };
 		1719C7132AC1F12A00209C55 /* ValueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueButton.swift; sourceTree = "<group>"; };
+		175979572AC4831D00293A16 /* NumberOfLines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOfLines.swift; sourceTree = "<group>"; };
 		17C14AB92AC29F0800E0730D /* TextSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSettings.swift; sourceTree = "<group>"; };
 		17FBDDF12AC3EC3B006935DA /* ColorChoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorChoice.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,6 +112,7 @@
 			children = (
 				17C14AB92AC29F0800E0730D /* TextSettings.swift */,
 				17FBDDF12AC3EC3B006935DA /* ColorChoice.swift */,
+				175979572AC4831D00293A16 /* NumberOfLines.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 				1719C7102AC1E7F300209C55 /* DescriptionLabel.swift in Sources */,
 				17FBDDF22AC3EC3B006935DA /* ColorChoice.swift in Sources */,
 				1719C6F62AC193D100209C55 /* SceneDelegate.swift in Sources */,
+				175979582AC4831D00293A16 /* NumberOfLines.swift in Sources */,
 				1719C7142AC1F12A00209C55 /* ValueButton.swift in Sources */,
 				17C14ABA2AC29F0800E0730D /* TextSettings.swift in Sources */,
 				1719C70E2AC1978F00209C55 /* SetupViewController.swift in Sources */,

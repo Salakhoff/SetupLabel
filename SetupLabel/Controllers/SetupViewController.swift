@@ -14,7 +14,7 @@ protocol TextSettingsDelegate: AnyObject {
 class SetupViewController: UIViewController {
     
     weak var delegate: TextSettingsDelegate?
-
+    
     private var textSettings = TextSettings()
     
     private let settingFontLabel = DescriptionLabel(labelText: "Размера шрифта:")
@@ -50,7 +50,22 @@ class SetupViewController: UIViewController {
         return textField
     }()
     
-    private lazy var pickerColorView = UIPickerView()
+    private lazy var pickerView = UIPickerView()
+    
+    private lazy var textFieldToolbar: UIToolbar = {
+        let toolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.isTranslucent = true
+        toolbar.sizeToFit()
+        
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        toolbar.setItems([flexibleSpace, cancelButton], animated: false)
+        toolbar.isUserInteractionEnabled = true
+        
+        return toolbar
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,8 +74,6 @@ class SetupViewController: UIViewController {
         setDelegate()
         addTarget()
         updateValue()
-        
-        colorTextField.inputView = pickerColorView
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -79,12 +92,17 @@ class SetupViewController: UIViewController {
         view.addSubview(colorTextField)
         view.addSubview(numberLineLabel)
         view.addSubview(numberLineTextField)
-        view.addSubview(pickerColorView)
+        
+        colorTextField.inputView = pickerView
+        colorTextField.inputAccessoryView = textFieldToolbar
+        
+        numberLineTextField.inputView = pickerView
+        numberLineTextField.inputAccessoryView = textFieldToolbar
     }
     
     private func setDelegate() {
-        pickerColorView.delegate = self
-        pickerColorView.dataSource = self
+        pickerView.delegate = self
+        pickerView.dataSource = self
     }
     
     private func updateValue() {
@@ -92,26 +110,24 @@ class SetupViewController: UIViewController {
         settingFontSlider.value = Float(textSettings.fontSize)
         
         colorTextField.text = textSettings.textColor.rawValue
-        numberLineTextField.text = "\(textSettings.numberOfLines)"
+        numberLineTextField.text = "\(textSettings.numberOfLines.rawValue)"
+    }
+    
+    private func addTarget() {
+        settingFontSlider.addTarget(self, action: #selector(fontSizeSliderValueChanged(_:)), for: .valueChanged)
+    }
+    
+    @objc private func cancelButtonTapped() {
+        if colorTextField.isEditing {
+            colorTextField.resignFirstResponder()
+        } else if numberLineTextField.isEditing {
+            numberLineTextField.resignFirstResponder()
+        }
     }
     
     @objc private func fontSizeSliderValueChanged(_ sender: UISlider) {
         textSettings.fontSize = CGFloat(sender.value)
         valueSliderLabel.text = "\(Int(textSettings.fontSize))"
-    }
-    
-    @objc private func colorTextFieldTapped() {
-        // Реализация по нажатию на текстфилд по выбору цвета
-    }
-    
-    @objc private func numberOfLinesTextFieldTapped() {
-        // Показать контроллер выбора количества строк и обновить значение textSettings.numberOfLines
-    }
-    
-    private func addTarget() {
-        settingFontSlider.addTarget(self, action: #selector(fontSizeSliderValueChanged(_:)), for: .valueChanged)
-        colorTextField.addTarget(self, action: #selector(colorTextFieldTapped), for: .valueChanged)
-        numberLineTextField.addTarget(self, action: #selector(numberOfLinesTextFieldTapped), for: .valueChanged)
     }
 }
 
@@ -155,15 +171,31 @@ extension SetupViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        ColorChoice.allCases.count
+        if colorTextField.isEditing {
+            return ColorChoice.allCases.count
+        } else if numberLineTextField.isEditing {
+            return NumberOfLines.allCases.count
+        }
+        
+        return 0
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        ColorChoice.allCases[row].rawValue
+        if colorTextField.isEditing {
+            return ColorChoice.allCases[row].rawValue
+        } else if numberLineTextField.isEditing {
+            return NumberOfLines.allCases[row].rawValue
+        }
+        
+        return nil
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        textSettings.textColor = ColorChoice.allCases[row]
+        if colorTextField.isEditing {
+            textSettings.textColor = ColorChoice.allCases[row]
+        } else if numberLineTextField.isEditing {
+            textSettings.numberOfLines = NumberOfLines.allCases[row]
+        }
         updateValue()
     }
 }

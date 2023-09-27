@@ -45,7 +45,7 @@ class MainViewController: UIViewController {
     private func updateViews() {
         label.font = UIFont.systemFont(ofSize: self.textSettings.fontSize)
         label.textColor = self.textSettings.textColor.systemColor
-        label.numberOfLines = self.textSettings.numberOfLines
+        label.numberOfLines = self.textSettings.numberOfLines.numberLine
     }
     
     private func setupView() {
