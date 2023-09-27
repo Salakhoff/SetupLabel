@@ -9,8 +9,7 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    private var textSettings = TextSettings(fontSize: 20, textColor: .black, numberOfLines: 0)
-    
+    private var textSettings = TextSettings()
     let setupViewController = SetupViewController()
     
     private var label: UILabel = {
@@ -45,7 +44,7 @@ class MainViewController: UIViewController {
     
     private func updateViews() {
         label.font = UIFont.systemFont(ofSize: self.textSettings.fontSize)
-        label.textColor = self.textSettings.textColor
+        label.textColor = self.textSettings.textColor.systemColor
         label.numberOfLines = self.textSettings.numberOfLines
     }
     

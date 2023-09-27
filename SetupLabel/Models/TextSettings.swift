@@ -8,7 +8,7 @@
 import UIKit
 
 struct TextSettings {
-    var fontSize: CGFloat
-    var textColor: UIColor
-    var numberOfLines: Int
+    var fontSize: CGFloat = 20
+    var textColor: ColorChoice = .black
+    var numberOfLines: Int = 0
 }

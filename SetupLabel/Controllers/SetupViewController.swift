@@ -14,24 +14,17 @@ protocol TextSettingsDelegate: AnyObject {
 class SetupViewController: UIViewController {
     
     weak var delegate: TextSettingsDelegate?
-    
-    private var colorChoice: ColorChoice = .blue
-    var textSettings = TextSettings(fontSize: 20, textColor: .black, numberOfLines: 0)
+
+    private var textSettings = TextSettings()
     
     private let settingFontLabel = DescriptionLabel(labelText: "Размера шрифта:")
     private let settingColorLabel = DescriptionLabel(labelText: "Цвет текста:")
     private let numberLineLabel = DescriptionLabel(labelText: "Количество строк:")
     
-    private let valueSliderLabel = ValueLabel(labelText: "20")
-    
-    private lazy var colorButton = ValueButton(titleText: "Выбрать цвет")
-    private lazy var numberLineButton = ValueButton(titleText: "Выбрать количество строк")
-    
-    private lazy var pickerColorView: UIPickerView = {
-        let picker = UIPickerView()
-        picker.translatesAutoresizingMaskIntoConstraints = false
-        picker.isHidden = true
-        return picker
+    private let valueSliderLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     private let settingFontSlider: UISlider = {
@@ -43,16 +36,31 @@ class SetupViewController: UIViewController {
         return slider
     }()
     
+    private lazy var colorTextField: UITextField = {
+        let textField = UITextField()
+        textField.borderStyle = .roundedRect
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    private lazy var numberLineTextField: UITextField = {
+        let textField = UITextField()
+        textField.borderStyle = .roundedRect
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    private lazy var pickerColorView = UIPickerView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        setConstraints()
+        setDelegate()
+        addTarget()
+        updateValue()
         
-        pickerColorView.delegate = self
-        pickerColorView.dataSource = self
-        
-        settingFontSlider.addTarget(self, action: #selector(fontSizeSliderValueChanged(_:)), for: .valueChanged)
-        colorButton.addTarget(self, action: #selector(colorButtonTapped), for: .touchUpInside)
-        numberLineButton.addTarget(self, action: #selector(numberOfLinesButtonTapped), for: .touchUpInside)
+        colorTextField.inputView = pickerColorView
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -68,12 +76,23 @@ class SetupViewController: UIViewController {
         view.addSubview(settingFontSlider)
         view.addSubview(valueSliderLabel)
         view.addSubview(settingColorLabel)
-        view.addSubview(colorButton)
+        view.addSubview(colorTextField)
         view.addSubview(numberLineLabel)
-        view.addSubview(numberLineButton)
+        view.addSubview(numberLineTextField)
         view.addSubview(pickerColorView)
+    }
+    
+    private func setDelegate() {
+        pickerColorView.delegate = self
+        pickerColorView.dataSource = self
+    }
+    
+    private func updateValue() {
+        valueSliderLabel.text = "\(Int(textSettings.fontSize))"
+        settingFontSlider.value = Float(textSettings.fontSize)
         
-        setConstraints()
+        colorTextField.text = textSettings.textColor.rawValue
+        numberLineTextField.text = "\(textSettings.numberOfLines)"
     }
     
     @objc private func fontSizeSliderValueChanged(_ sender: UISlider) {
@@ -81,17 +100,18 @@ class SetupViewController: UIViewController {
         valueSliderLabel.text = "\(Int(textSettings.fontSize))"
     }
     
-    @objc private func colorButtonTapped() {
-        
-        if let row = ColorChoice.allCases.firstIndex(of: colorChoice) {
-            pickerColorView.selectRow(row, inComponent: 0, animated: true)
-        }
-        
-        pickerColorView.isHidden = false
+    @objc private func colorTextFieldTapped() {
+        // Реализация по нажатию на текстфилд по выбору цвета
     }
     
-    @objc private func numberOfLinesButtonTapped() {
+    @objc private func numberOfLinesTextFieldTapped() {
         // Показать контроллер выбора количества строк и обновить значение textSettings.numberOfLines
+    }
+    
+    private func addTarget() {
+        settingFontSlider.addTarget(self, action: #selector(fontSizeSliderValueChanged(_:)), for: .valueChanged)
+        colorTextField.addTarget(self, action: #selector(colorTextFieldTapped), for: .valueChanged)
+        numberLineTextField.addTarget(self, action: #selector(numberOfLinesTextFieldTapped), for: .valueChanged)
     }
 }
 
@@ -114,19 +134,17 @@ extension SetupViewController {
             settingColorLabel.leadingAnchor.constraint(equalTo: settingFontSlider.leadingAnchor),
             settingColorLabel.trailingAnchor.constraint(equalTo: settingFontSlider.trailingAnchor),
             
-            colorButton.topAnchor.constraint(equalTo: settingColorLabel.bottomAnchor, constant: 10),
-            colorButton.leadingAnchor.constraint(equalTo: settingFontSlider.leadingAnchor),
+            colorTextField.topAnchor.constraint(equalTo: settingColorLabel.bottomAnchor, constant: 10),
+            colorTextField.leadingAnchor.constraint(equalTo: settingFontSlider.leadingAnchor),
+            colorTextField.trailingAnchor.constraint(equalTo: valueSliderLabel.trailingAnchor),
             
-            numberLineLabel.topAnchor.constraint(equalTo: colorButton.bottomAnchor, constant: 20),
+            numberLineLabel.topAnchor.constraint(equalTo: colorTextField.bottomAnchor, constant: 20),
             numberLineLabel.leadingAnchor.constraint(equalTo: settingFontSlider.leadingAnchor),
             numberLineLabel.trailingAnchor.constraint(equalTo: settingFontSlider.trailingAnchor),
             
-            numberLineButton.topAnchor.constraint(equalTo: numberLineLabel.bottomAnchor, constant: 10),
-            numberLineButton.leadingAnchor.constraint(equalTo: settingFontSlider.leadingAnchor),
-            
-            pickerColorView.topAnchor.constraint(equalTo: numberLineButton.bottomAnchor, constant: 20),
-            pickerColorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            pickerColorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            numberLineTextField.topAnchor.constraint(equalTo: numberLineLabel.bottomAnchor, constant: 10),
+            numberLineTextField.leadingAnchor.constraint(equalTo: settingFontSlider.leadingAnchor),
+            numberLineTextField.trailingAnchor.constraint(equalTo: valueSliderLabel.trailingAnchor)
         ])
     }
 }
@@ -145,9 +163,7 @@ extension SetupViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        colorChoice = ColorChoice.allCases[row]
-        textSettings.textColor = colorChoice.systemColor
-        colorButton.setTitle("Вы выбрали цвет: \(colorChoice.rawValue)", for: .normal)
-        pickerColorView.isHidden = true
+        textSettings.textColor = ColorChoice.allCases[row]
+        updateValue()
     }
 }

@@ -8,6 +8,8 @@
 import UIKit
 
 enum ColorChoice: String, CaseIterable {
+    
+    case black = "Черный"
     case red = "Красный"
     case green = "Зеленый"
     case blue = "Синий"
@@ -19,7 +21,8 @@ enum ColorChoice: String, CaseIterable {
         case .green: UIColor.systemGreen
         case .blue: UIColor.systemBlue
         case .yellow: UIColor.systemYellow
-    
+        case .black: UIColor.black
+            
         }
     }
 }
